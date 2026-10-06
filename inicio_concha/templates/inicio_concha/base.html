@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<h1 class="mb-2">{{ titulo }}</h1>
+<p class="lead mb-4">Elige uno de los dos temas para ver más información.</p>
+
+<div class="row g-4">
+    {% for tema in temas %}
+    <div class="col-12 col-md-6">
+        <div class="card h-100 shadow-sm">
+            <img src="{% static tema.imagenes.0 %}" class="card-img-top card-portada" alt="{{ tema.nombre }}">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ tema.nombre }}
+                    {% if tema.destacado %}
+                        <span class="badge text-bg-primary">Destacado</span>
+                    {% endif %}
+                </h5>
+                <p class="card-text">{{ tema.descripcion }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a href="{% url 'inicio:tema' tema.slug %}" class="btn btn-primary">Ver tema</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No hay temas disponibles.</p>
+    {% endfor %}
+</div>
+{% endblock %}
